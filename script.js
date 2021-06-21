@@ -198,3 +198,6 @@ document.querySelector('.nav__links').addEventListener('click', function (e) {
 // });
 
 // // 189. Event Delegation: Implementing Page Navigation
+
+// 190. DOM Traversing
+// walking through the dom
