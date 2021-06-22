@@ -46,6 +46,7 @@ btnScrollTo.addEventListener('click', function (e) {
 //     console.log(id);
 //     document.querySelector(id).scrollIntoView({ behavior: 'smooth' });
 //   });
+//
 // });
 
 // event delegation
