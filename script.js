@@ -201,6 +201,10 @@ document.querySelector('.nav__links').addEventListener('click', function (e) {
 // 190. DOM Traversing
 // walking through the dom
 
+// =====================
+// DOM Traversing
+// =====================
+
 const h1 = document.querySelector('h1');
 
 // Going downwards: child
