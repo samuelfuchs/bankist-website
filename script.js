@@ -124,7 +124,7 @@ document.querySelector('.nav__links').addEventListener('click', function (e) {
 // Implementing a Sticky Navigation: The Scroll Event
 // =====================
 
-// === BAD PRACTICE FOR SCROLL EVENTS ===
+// === BAD PRACTICE FOR SCROLL EVENTS FOR MOBILE USE (OLDER PHONES)===
 // MAKE STICKY WHEN WE REACH 1ST SECTION!::
 const initialCoords = section1.getBoundingClientRect();
 console.log(initialCoords);
