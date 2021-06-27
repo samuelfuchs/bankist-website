@@ -46,6 +46,66 @@ btnScrollTo.addEventListener('click', function (e) {
 //
 // });
 
+// =====================
+// Building a Tabbed Component
+// =====================
+
+// Tabbed Component
+const tabs = document.querySelectorAll('.operations__tab');
+const tabsContainer = document.querySelector('.operations__tab-container');
+const tabsContent = document.querySelectorAll('.operations__content');
+
+// BAD PRACTICE:
+// tabs.forEach(t => addEventListener('click', () => console.log('TAB')));
+
+// GOOD PRACTICE: event delegation!
+tabsContainer.addEventListener('click', function (e) {
+  const clicked = e.target.closest('.operations__tab');
+
+  // Guard clause:::
+  // an if statement that returns early if a condition is matched
+  if (!clicked) return;
+
+  // Remove active classes
+  tabs.forEach(t => t.classList.remove('operations__tab--active'));
+  clicked.classList.add('operations__tab--active');
+
+  // Activate tab
+  tabsContent.forEach(c => c.classList.remove('operations__content--active'));
+
+  // Active content area
+  document
+    .querySelector(`.operations__content--${clicked.dataset.tab}`)
+    .classList.add('operations__content--active');
+});
+
+// =====================
+// Passing Arguments to Event Handlers
+// =====================
+
+const handleHover = function (e, opacity) {
+  if (e.target.classList.contains('nav__link')) {
+    const link = e.target;
+    // instead of moving up 2x to get to the real parent element we choose the 'closest'-method again
+    const siblings = link.closest('.nav').querySelectorAll('.nav__link');
+    // for any IMG in the navigation::
+    const logo = link.closest('.nav').querySelector('img');
+
+    siblings.forEach(el => {
+      if (el !== link) el.style.opacity = this;
+      logo.style.opacity = this;
+    });
+  }
+};
+
+// Menu fade animation
+// AGAIN: EVENT DELEGATION
+const nav = document.querySelector('.nav');
+
+// Passing "argument" into handler
+nav.addEventListener('mouseover', handleHover.bind(0.5));
+nav.addEventListener('mouseout', handleHover.bind(1));
+
 // event delegation
 
 // 1. Add event listener to common parent element
@@ -235,36 +295,3 @@ document.querySelector('.nav__links').addEventListener('click', function (e) {
 // [...h1.parentElement.children].forEach(function (el) {
 //   if (el !== h1) el.style.transform = 'scale(0.5)';
 // });
-
-// =====================
-// Building a Tabbed Component
-// =====================
-
-// Tabbed Component
-const tabs = document.querySelectorAll('.operations__tab');
-const tabsContainer = document.querySelector('.operations__tab-container');
-const tabsContent = document.querySelectorAll('.operations__content');
-
-// BAD PRACTICE:
-// tabs.forEach(t => addEventListener('click', () => console.log('TAB')));
-
-// GOOD PRACTICE: event delegation!
-tabsContainer.addEventListener('click', function (e) {
-  const clicked = e.target.closest('.operations__tab');
-
-  // Guard clause:::
-  // an if statement that returns early if a condition is matched
-  if (!clicked) return;
-
-  // Remove active classes
-  tabs.forEach(t => t.classList.remove('operations__tab--active'));
-  clicked.classList.add('operations__tab--active');
-
-  // Activate tab
-  tabsContent.forEach(c => c.classList.remove('operations__content--active'));
-
-  // Active content area
-  document
-    .querySelector(`.operations__content--${clicked.dataset.tab}`)
-    .classList.add('operations__content--active');
-});
