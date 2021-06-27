@@ -120,6 +120,23 @@ document.querySelector('.nav__links').addEventListener('click', function (e) {
   }
 });
 
+// =====================
+// Implementing a Sticky Navigation: The Scroll Event
+// =====================
+
+// === BAD PRACTICE FOR SCROLL EVENTS ===
+// MAKE STICKY WHEN WE REACH 1ST SECTION!::
+const initialCoords = section1.getBoundingClientRect();
+console.log(initialCoords);
+
+// Sticky navigation
+window.addEventListener('scroll', function () {
+  console.log(window.scrollY);
+  if (window.scrollY > initialCoords.top) nav.classList.add('sticky');
+  else nav.classList.remove('sticky');
+});
+// === ============================ ===
+
 // console.log(document.documentElement);
 // console.log(document.head);
 // console.log(document.body);
