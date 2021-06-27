@@ -200,3 +200,33 @@ document.querySelector('.nav__links').addEventListener('click', function (e) {
 
 // 190. DOM Traversing
 // walking through the dom
+
+const h1 = document.querySelector('h1');
+
+// Going downwards: child
+console.log(h1.querySelectorAll('.highlight'));
+console.log(h1.childNodes); //not that used
+console.log(h1.children); // only works for direct children
+h1.firstElementChild.style.color = 'white';
+h1.lastElementChild.style.color = 'orangered';
+
+// Going upwards: parents
+console.log(h1.parentNode);
+console.log(h1.parentElement);
+
+h1.closest('.header').style.background = 'var(--gradient-secondary)';
+
+h1.closest('h1').style.background = 'var(--gradient-primary)';
+
+// Going sideways: siblings
+console.log(h1.previousElementSibling); // returns null bc there's nothing before it
+console.log(h1.nextElementSibling); // h4 element
+
+console.log(h1.previousSibling);
+console.log(h1.nextSibling);
+
+// get children from parent element
+console.log(h1.parentElement.children);
+[...h1.parentElement.children].forEach(function (el) {
+  if (el !== h1) el.style.transform = 'scale(0.5)';
+});
