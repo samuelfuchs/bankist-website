@@ -157,24 +157,53 @@ document.querySelector('.nav__links').addEventListener('click', function (e) {
 // const observer = new IntersectionObserver(obsCallback, obsOptions);
 // observer.observe(section1);
 
-const header = document.querySelector('.header');
-const navHeight = nav.getBoundingClientRect().height;
-// console.log(navHeight);
+// const header = document.querySelector('.header');
+// const navHeight = nav.getBoundingClientRect().height;
+// // console.log(navHeight);
 
-const stickyNav = function (entries) {
+// const stickyNav = function (entries) {
+//   const [entry] = entries;
+//   // console.log(entry);
+
+//   if (!entry.isIntersecting) nav.classList.add('sticky');
+//   else nav.classList.remove('sticky');
+// };
+
+// const headerObserver = new IntersectionObserver(stickyNav, {
+//   root: null,
+//   threshold: 0,
+//   rootMargin: `-${navHeight}px`,
+// });
+// headerObserver.observe(header);
+
+// =====================
+// Revealing Elements on Scroll
+// =====================
+
+// animation actually comes from css
+// All sections
+
+// Reveal sections
+const allSections = document.querySelectorAll('.section');
+
+const revealSection = function (entries, observer) {
   const [entry] = entries;
-  // console.log(entry);
+  console.log(entry);
 
-  if (!entry.isIntersecting) nav.classList.add('sticky');
-  else nav.classList.remove('sticky');
+  if (!entry.isIntersecting) return;
+  entry.target.classList.remove('section--hidden');
+  observer.unobserve(entry.target);
 };
 
-const headerObserver = new IntersectionObserver(stickyNav, {
+const sectionObserver = new IntersectionObserver(revealSection, {
   root: null,
-  threshold: 0,
-  rootMargin: `-${navHeight}px`,
+  threshold: 0.15,
 });
-headerObserver.observe(header);
+
+allSections.forEach(function (section) {
+  sectionObserver.observe(section);
+  section.classList.add('section--hidden');
+});
 
 // === ============================ ===
 
