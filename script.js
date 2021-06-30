@@ -180,30 +180,67 @@ document.querySelector('.nav__links').addEventListener('click', function (e) {
 // Revealing Elements on Scroll
 // =====================
 
-// animation actually comes from css
-// All sections
+// // animation actually comes from css
+// // All sections
 
-// Reveal sections
-const allSections = document.querySelectorAll('.section');
+// // Reveal sections
+// const allSections = document.querySelectorAll('.section');
 
-const revealSection = function (entries, observer) {
+// const revealSection = function (entries, observer) {
+//   const [entry] = entries;
+//   console.log(entry);
+
+//   if (!entry.isIntersecting) return;
+//   entry.target.classList.remove('section--hidden');
+//   observer.unobserve(entry.target);
+// };
+
+// const sectionObserver = new IntersectionObserver(revealSection, {
+//   root: null,
+//   threshold: 0.15,
+// });
+
+// allSections.forEach(function (section) {
+//   sectionObserver.observe(section);
+//   section.classList.add('section--hidden');
+// });
+
+// =====================
+// Lazy Loading Images
+// =====================
+
+// load images as they move into the viewport.
+// Basically changing a 'preview' img with the actual img
+
+// Have a very low resolution img which is very small and quickly loaded
+// add a speacial data attribute to the img in the html file
+// Blur the img out so it looks cool 😎
+
+// lazy loading images
+const imgTargets = document.querySelectorAll('img[data-src]');
+
+const loadImg = function (entries, observer) {
   const [entry] = entries;
-  console.log(entry);
 
   if (!entry.isIntersecting) return;
-  entry.target.classList.remove('section--hidden');
+
+  // Replace src with data-src
+  entry.target.src = entry.target.dataset.src;
+
+  entry.target.addEventListener('load', function () {
+    entry.target.classList.remove('lazy-img');
+  });
+
   observer.unobserve(entry.target);
 };
 
-const sectionObserver = new IntersectionObserver(revealSection, {
+const imgObserver = new IntersectionObserver(loadImg, {
   root: null,
-  threshold: 0.15,
+  threshold: 0,
+  rootMargin: '200px',
 });
 
-allSections.forEach(function (section) {
-  sectionObserver.observe(section);
-  section.classList.add('section--hidden');
-});
+imgTargets.forEach(img => imgObserver.observe(img));
 
 // === ============================ ===
 
