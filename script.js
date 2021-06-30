@@ -124,17 +124,58 @@ document.querySelector('.nav__links').addEventListener('click', function (e) {
 // Implementing a Sticky Navigation: The Scroll Event
 // =====================
 
-// === BAD PRACTICE FOR SCROLL EVENTS FOR MOBILE USE (OLDER PHONES)===
-// MAKE STICKY WHEN WE REACH 1ST SECTION!::
-const initialCoords = section1.getBoundingClientRect();
-console.log(initialCoords);
+// // === BAD PRACTICE FOR SCROLL EVENTS FOR MOBILE USE (OLDER PHONES)===
+// // MAKE STICKY WHEN WE REACH 1ST SECTION!::
+// const initialCoords = section1.getBoundingClientRect();
+// console.log(initialCoords);
 
-// Sticky navigation
-window.addEventListener('scroll', function () {
-  console.log(window.scrollY);
-  if (window.scrollY > initialCoords.top) nav.classList.add('sticky');
+// // Sticky navigation
+// window.addEventListener('scroll', function () {
+//   console.log(window.scrollY);
+//   if (window.scrollY > initialCoords.top) nav.classList.add('sticky');
+//   else nav.classList.remove('sticky');
+// });
+
+// =====================
+// A Better Way: The Intersection Observer API
+// =====================
+
+// // What it is: allows code to observe changes to the way that a certain  target element intersects another element or it intersects the viewport
+
+// // To use, create new intersection observer:
+// const obsCallback = function (entries, observer) {
+//   entries.forEach(entry => {
+//     console.log(entry);
+//   });
+// };
+
+// const obsOptions = {
+//   root: null,
+//   threshold: [0, 0.2],
+// };
+
+// const observer = new IntersectionObserver(obsCallback, obsOptions);
+// observer.observe(section1);
+
+const header = document.querySelector('.header');
+const navHeight = nav.getBoundingClientRect().height;
+console.log(navHeight);
+
+const stickyNav = function (entries) {
+  const [entry] = entries;
+  console.log(entry);
+
+  if (!entry.isIntersecting) nav.classList.add('sticky');
   else nav.classList.remove('sticky');
+};
+
+const headerObserver = new IntersectionObserver(stickyNav, {
+  root: null,
+  threshold: 0,
+  rootMargin: `-${navHeight}px`,
 });
+headerObserver.observe(header);
+
 // === ============================ ===
 
 // console.log(document.documentElement);
